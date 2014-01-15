@@ -1,0 +1,15 @@
+extends layout
+
+prepend head
+  link(rel="stylesheet", href="/room.css")
+
+append content
+  .waiting
+    h2 Sorry, there are too many people in this room right now.
+    .status 
+      if status.rank == 0
+        | You are next in line.
+      else if status.rank == 1
+        | There is 1 person ahead of you.
+      else
+        | There are #{status.rank} people ahead of you.

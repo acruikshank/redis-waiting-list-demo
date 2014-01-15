@@ -1,11 +1,10 @@
-var canvas, ctx, room, events;
+var canvas, ctx, room, events, userId;
 
 // define socket event handlers
 var handlers = {}
 
 handlers.connect = function() {
-  console.log("CONNECTING")
-  events.send('join', room);
+  events.send('join', {roomId:room, userId:userId});
 }
 
 handlers.draw = function( coords ) {
@@ -26,8 +25,9 @@ function canvasClick(e) {
 
 // initialize the app
 window.onload = function initialize() {
-  // our room id is the id of the document body
+  // our room id and user id are in the document body
   room = document.body.id
+  userId = document.body.getAttribute('data-user_id')
 
   // connect socket
   events = Events();
@@ -54,7 +54,6 @@ function Events() {
     socket = io.connect();
 
     socket.on( 'message', function( data ) { 
-      console.log("GOT MESSAGE", data)
       for( var type in data )
         if( type in handlers )
           for ( var i=0,h=handlers[type],l=h.length; i < l; i++ ) h[i]( data[type] );
