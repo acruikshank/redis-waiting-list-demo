@@ -1,0 +1,50 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-family: Helvetica;
+  font-size: 14px;
+}
+
+h1 {
+  margin: 0 .2em;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+canvas {
+  display: block;
+  height: 800px;
+  width: 100%;
+  background: #000;
+}
+
+.waiting {
+  text-align: center;
+  margin: 0;
+  height: 100%;
+}
+
+.waiting h2 {
+  font-weight: normal;
+  color: #999; 
+}
+
+.waiting .status {
+  font-size: 56px;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 56px;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ie-transform: translateY(-50%);
+}
