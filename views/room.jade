@@ -1,0 +1,10 @@
+extends layout
+
+prepend head
+  link(rel="stylesheet", href="/room.css")
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(type='text/javascript', src='/room.js')
+
+append content
+  h1 room #{locals.id}
+  canvas#show
