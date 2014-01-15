@@ -86,9 +86,21 @@ if (cluster.isMaster) {
     return response.render( 'index' );
   });
 
+  // Handle status request
+
   // Handle room
   app.get("/:room", checkId, checkCapacity, function( request, response) {
     return response.render( 'room', {id:request.params.room, userId:request.session.id} );
+  });
+
+  // Handle status checks
+  app.get( "/:room/waiting-list", checkId, function(request, response, next) {
+    return participation.check(request.params.room, request.session.id, respondWithStatus);
+
+    function respondWithStatus(err, status) {
+      if (err) return next(err);
+      return response.send(status);
+    }
   });
 
   //********** START SERVER *****************
