@@ -6,21 +6,12 @@ append content
   .home
     h1 Real-time Waiting List Demonstration
 
-    p To test it out, create a room by going to [this url]/[room name] or create a 
-      a#random random room
-      | . Gather up as many friends / machines / browsers as you can to hit the same URL. The server uses
+    p To test it out, create a room by going to [this url]/[room name] or go to the 
+      a(href="/demo") default room
+      | . Gather up as many friends / devices / browsers as you can to hit the same URL. The server uses
       | cookies to differentiate users, so tabs within the same browser won't count as separate users. 
       | The first  few sessions (the exact number depends on the MAXIMUM_ROOM_SIZE setting in server.js) 
       | to connect will see a collaborative drawing experience. Subsequent sessions will land on the waiting 
       | list. Disconnecting the earlier sessions (by closing the window or moving to a different page) will
       | change the status for the sessions in the waiting list after about 30 seconds. The session at
       | the front of the list will automatically enter the room.
-
-  script
-    function generateRoomId() {
-      for (var i=0,roomId='',r; r=parseInt(Math.random()*36), i<5; i++)
-        roomId += r < 10 ? r : String.fromCharCode(87+r);
-      return roomId;
-    }
-
-    document.getElementById('random').setAttribute('href', '/' + generateRoomId());

@@ -9,7 +9,7 @@ var sessions = require( "cookie-sessions" );
 var participationModule = require('./lib/participation')
 
 // Use this to control how many people are allowed in a room.
-var MAXIMUM_ROOM_SIZE = 4;
+var MAXIMUM_ROOM_SIZE = parseInt(process.env.NODE_WAITING_LIST_SIZE) || 4;
 
 /*************************
  * Cluster
@@ -44,7 +44,7 @@ if (cluster.isMaster) {
     app.set( 'view engine', 'jade' );
 
     app.use( express.static(__dirname + '/public') );
-    app.use( sessions( { secret: "careful this isn't really secret", session_key: '_redis-waiting-list' } ) );
+    app.use( sessions( { secret: process.env.NODE_SESSION_SECRET || "careful, this isn't really secret", session_key: '_redis-waiting-list' } ) );
   });
 
   /* Make sure the user has an id */
@@ -106,8 +106,9 @@ if (cluster.isMaster) {
   //********** START SERVER *****************
   
   var applicationServer = http.createServer(app);
-  applicationServer.listen( 8234 );
-  console.log( "Listening on port 8234" );
+  var port = parseInt(process.env.NODE_PORT) || 8234;
+  applicationServer.listen( port );
+  console.log( "Listening on port " + port );
 
 
   /*************************
