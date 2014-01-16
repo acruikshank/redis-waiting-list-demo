@@ -210,7 +210,7 @@ describe('participation', function(){
         return checkUsers(roomId, userIds(5, 10), checkIn);
 
         function checkIn() {
-          clock.add(30*SECONDS);
+          clock.add(15*SECONDS);
           checkUsers(roomId, ['user10','user12','user13'], ex(dropUsers));
         }
 
@@ -222,12 +222,12 @@ describe('participation', function(){
         }
 
         function checkIn2() {
-          clock.add(20*SECONDS);
+          clock.add(10*SECONDS);
           checkUsers(roomId, ['user10','user12','user13'], ex(waitForTimeout));
         }
 
         function waitForTimeout() {
-          clock.add(50*SECONDS)
+          clock.add(25*SECONDS)
           done();
         }
       })

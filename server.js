@@ -8,6 +8,9 @@ var sessions = require( "cookie-sessions" );
 
 var participationModule = require('./lib/participation')
 
+// Use this to control how many people are allowed in a room.
+var MAXIMUM_ROOM_SIZE = 4;
+
 /*************************
  * Cluster
  *************************/
@@ -30,9 +33,6 @@ if (cluster.isMaster) {
    ***************************************/
 
   var app = express();
-
-  // Use this to control how many people are allowed in a room.
-  var MAXIMUM_ROOM_SIZE = 2;
 
   // Create participation object to track room capacity. 
   var participation = participationModule.Participation( MAXIMUM_ROOM_SIZE, redis.createClient() );
@@ -126,29 +126,46 @@ if (cluster.isMaster) {
     redisClient : redis.createClient()
   }));
 
+  function updateRoomCount( roomId ) {
+    return participation.count(roomId, withCount);
+
+    function withCount( err, count ) {
+      if ( err )
+        return console.log(err);
+
+      io.sockets.in(roomId).json.emit('message', {count:count})
+    }
+  }
+
   // Use join message to register as a participant
   function join( socket, message ) {
-    socket.join(message.room);
+    socket.join(message.roomId);
     participation.connect(message.roomId, message.userId, null);
 
     // use socket to track state
     socket.roomId = message.roomId;
     socket.userId = message.userId;
+
+    updateRoomCount( message.roomId );
   }
 
   io.sockets.on( 'connection', function( socket ) {
-    socket.on( 'message', function( message ) {
-      for ( var type in message )
+    socket.on( 'message', function( body ) {
+      for ( var type in body ) {
+        var message = body[type];
         if ( type === 'join' )
-          join( socket, message[type] );
-        else if (message[type].room)
-          io.sockets.in(message[type].room).json.emit('message',message);
+          join( socket, message );
+        else if (message.room)
+          io.sockets.in(message.room).json.emit('message',body);
+      }
     } );
 
     socket.on( 'disconnect', function() {
       // disconnect from room
       if (socket.roomId)
          participation.disconnect(socket.roomId, socket.userId, null);
+
+      updateRoomCount( socket.roomId );
     } );
   } );
 

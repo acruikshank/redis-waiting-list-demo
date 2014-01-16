@@ -6,7 +6,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #fff;
+  background-color: #999;
   font-family: Helvetica;
   font-size: 14px;
 }
@@ -19,9 +19,16 @@ h1 {
 
 canvas {
   display: block;
-  height: 800px;
+  height: 90%;
   width: 100%;
-  background: #000;
+  background: #666;
+}
+
+#connected {
+  position: absolute;
+  top: 3px;
+  font-size: 19px;
+  right: 10px; 
 }
 
 .waiting {
