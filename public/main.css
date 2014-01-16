@@ -55,3 +55,25 @@ canvas {
   -moz-transform: translateY(-50%);
   -ie-transform: translateY(-50%);
 }
+
+.home {
+  margin: 4%;
+}
+
+.home h1 {
+  margin-left: 0;
+  margin-bottom: 42px;
+  font-size: 40px;
+}
+
+.home p {
+  margin-top: 20px;
+  margin-left: 40px;
+  font-size: 18px;
+  width: 500px;
+  line-height: 48px;
+}
+
+.home a {
+  color: #cc9;
+}
