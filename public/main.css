@@ -26,9 +26,9 @@ canvas {
 
 #connected {
   position: absolute;
-  top: 3px;
+  top: 4px;
   font-size: 19px;
-  right: 10px; 
+  right: 6px; 
 }
 
 .waiting {
