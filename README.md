@@ -17,7 +17,7 @@ npm start
 You should now be able to connect to the server at http://localhost:8234, follow the instructions from there.
 
 ## Testing
-The project only tests the core waiting list logic. Make sure [Mocha](http://visionmedia.github.io/mocha/) is installed on
+The project only tests the core waiting list logic. Make sure [Mocha](http://mochajs.org/) is installed on
 your machine and run:
 <pre>
 mocha test
